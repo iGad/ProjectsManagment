@@ -1,0 +1,65 @@
+﻿@model ProjectsManagment.Models.ProjectView
+@{
+    ViewBag.Title = "Создание проекта";
+    //Model.Creator = ViewBag.User;
+    //Model.CreationDate = DateTime.Now.Date;
+    //|Model.IsFinish = Model.IsPreFinish = false;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        
+       
+        
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name)                
+                @Html.ValidationMessageFor(model => model.Name)
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description)   
+                @Html.ValidationMessageFor(model => model.Description)             
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DeadLine, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              
+                @Html.EditorFor(model => model.DeadLine)
+                @Html.ValidationMessageFor(model => model.DeadLine)             
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserId", string.Empty)
+                @Html.ValidationMessageFor(model => model.UserId) 
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Создать" class="btn btn-green" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("К списку проектов", "Index")
+</div>

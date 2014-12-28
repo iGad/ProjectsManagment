@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="pangearu" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^\\\\psf\\Home\\Documents\\Visual\ Studio\ 2013\\Projects\\ProjectsManagment\\ProjectsManagment\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^\\\\psf\\Home\\Documents\\Visual\ Studio\ 2013\\Projects\\ProjectsManagment\\ProjectsManagment\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="pangearu/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^\\\\psf\\Home\\Documents\\Visual\ Studio\ 2013\\Projects\\ProjectsManagment\\ProjectsManagment\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=(LocalDb)\v11.0;Initial Catalog=ProjectsManagment-2-1-alpha1;Integrated Security=SSPI" tags="">
+    <parameterEntry kind="XmlFile" scope="\\\\psf\\Home\\Documents\\Visual\ Studio\ 2013\\Projects\\ProjectsManagment\\ProjectsManagment\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="ProjectsManagmentContext-Web.config Connection String" description="ProjectsManagmentContext Connection String used in web.config by the application to access the database." value="Data Source=(localdb)\v11.0; Initial Catalog=ProjectsManagmentContext-20141111164105; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|ProjectsManagmentContext-20141111164105.mdf" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="\\\\psf\\Home\\Documents\\Visual\ Studio\ 2013\\Projects\\ProjectsManagment\\ProjectsManagment\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ProjectsManagmentContext']/@connectionString" />
+  </parameter>
+</parameters>

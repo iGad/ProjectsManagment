@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.File.FullPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Partition.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stage.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Table.TableName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Task.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.File.FullPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Partition.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stage.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Table.TableName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Task.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

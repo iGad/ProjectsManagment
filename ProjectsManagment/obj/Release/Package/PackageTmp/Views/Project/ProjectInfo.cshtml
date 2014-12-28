@@ -1,0 +1,84 @@
+﻿@model ProjectsManagment.Models.Project
+<td>
+    @Html.DisplayFor(modelItem => Model.Name)
+</td>
+<td>
+    @if (string.IsNullOrEmpty(Model.Description))
+    {
+        <p>Описания нет.</p>
+    }
+    else
+    {
+        @Html.DisplayFor(modelItem => Model.Description)
+    }
+</td>
+<td>
+    @Html.DisplayFor(modelItem => Model.State.Name)
+</td>
+@if (Model.Manager == null)
+{
+    <td>
+        Отсутствует
+    </td>
+}
+else
+{
+    <td>
+        @Model.Manager.Surname @Model.Manager.Name (@Model.Manager.Email)
+    </td>
+}
+<td>
+    @Html.DisplayFor(modelItem => Model.CreationDate)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => Model.DeadLine)
+</td>
+<td>
+    @{
+        int i = 0;
+        foreach (var part in Model.Stages)
+        {
+            if (i < 3)
+            {
+                <a href="/Stage/Details/@part.Id">@part.Name</a><br />
+            }
+            i++;
+        }
+    }
+    <a href="/Stage?id=@Model.Id">Просмотреть все</a>
+</td>
+<td id="actions-@Model.Id.ToString()">
+    @if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор")))
+    {
+
+        if (!Model.IsFinish)
+        {
+            using (Ajax.BeginForm("MakeFinish", "Project", new { id = Model.Id, details = false }, new AjaxOptions { UpdateTargetId = "task-" + Model.Id.ToString() }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="submit" class="btn-green" style="margin:5px" value="Завершить" />
+            }
+        }
+        if (Model.IsPreFinish || Model.IsFinish)
+        {
+            using (Ajax.BeginForm("ShowInfoForCancel", "Project", new { id = Model.Id, details = false }, new AjaxOptions { UpdateTargetId = "actions-" + Model.Id.ToString() }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="submit" class="btn-red" style="margin:5px" value="Отменить завершение" />
+            }
+        }
+
+    }
+</td>
+
+<td>
+    @if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор")))
+    {
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id })
+        <br/>
+        @Html.ActionLink("Удалить", "Delete", new { id = Model.Id })
+        <br/>
+    }
+    @Html.ActionLink("Подробнее", "Details", new { id = Model.Id })
+
+</td>

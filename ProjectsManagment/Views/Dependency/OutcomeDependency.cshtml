@@ -1,0 +1,13 @@
+﻿@model ProjectsManagment.Models.Dependency
+<div>
+    <div class="depend" id="depend-@Model.Id">
+        <div style="float:left"></div>
+        <p class="depend-text">
+            @Html.ActionLink(Model.Task.Partition.Stage.Project.Name, "Details", "Project", new { id = Model.Task.Partition.Stage.ProjectId }, new { @class = "depend-link" })/
+            @Html.ActionLink(Model.Task.Partition.Stage.Name, "Details", "Stage", new { id = Model.Task.Partition.StageId }, new { @class = "depend-link" })/
+            @Html.ActionLink(Model.Task.Partition.Name, "Details", "Partition", new { id = Model.Task.PartitionId }, new { @class = "depend-link" })/
+            @Html.ActionLink(Model.Task.Name, "Details", "Task", new { id = Model.Task.Id }, new { @class = "depend-link" })
+        </p>
+    </div>
+
+</div>

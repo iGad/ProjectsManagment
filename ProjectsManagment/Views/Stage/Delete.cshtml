@@ -1,0 +1,20 @@
+﻿@model ProjectsManagment.Models.Stage
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление стадии @Model.Name</h2>
+
+<h3>Вы уверены, что хотите удалить эту стадию?</h3>
+<p>Все разделы и задания этой стадии будут также удалены</p>
+<div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-red" /> 
+            @Html.ActionLink("К списку стадий", "Index", new { id = Model.ProjectId })
+        </div>
+    }
+</div>

@@ -1,0 +1,40 @@
+﻿@model ProjectsManagment.Models.Comment
+
+
+<div class="comment" id="comment-@Model.Id">
+@using (Ajax.BeginForm("Edit", new {id = Model.Id, text = Model.Text}, new AjaxOptions { UpdateTargetId = "comment-"+Model.Id.ToString() }))
+{
+    @Html.AntiForgeryToken()
+    <div class="comment-up-left">
+        <label><b>Пользователь:</b> @Model.User.Surname @Model.User.Name (@Model.User.UserName)</label>
+    </div>
+
+    <div class="comment-up-right">
+        <label><b>Дата:</b> @Model.Date</label>
+    </div>
+
+    <div class="comment-text">
+        <hr />
+        <p><b>Текст:</b></p> @Html.TextAreaFor(model => model.Text)
+        <hr />
+
+    </div>
+    <div style="width:150px">        
+        <div class="btn">    
+           <input type="submit" class="btn-green" value="Сохранить" />
+        </div>  
+
+        
+    </div>
+}
+    <div style="width:150px" class="btn">
+        @using (Ajax.BeginForm("ShowCommentById", "Comment", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "comment-" + Model.Id }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" class="btn-red" value="Отмена" />
+        }
+    </div>
+</div>
+
+
+    

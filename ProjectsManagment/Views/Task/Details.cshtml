@@ -1,0 +1,23 @@
+﻿@model ProjectsManagment.Models.Task
+
+@{
+    ViewBag.Title = "Описание задания " + Model.Name;
+}
+<p class="page-path"><a class="page-path" href="~/Project/Details/@ViewBag.ProjectId">@ViewBag.ProjectName</a>/<a class="page-path" href="~/Stage/Details/@ViewBag.StageId">@ViewBag.StageName</a>/<a class="page-path" href="~/Partition/Details/@ViewBag.PartitionId">@ViewBag.PartitionName</a>/@Model.Name</p>
+<h2>@ViewBag.Title</h2>
+
+<div>
+	<hr />
+    @Html.Action("ShowDetails","Task",Model)
+</div>
+<p>
+@if(Model.Executor !=null && Request.IsAuthenticated && (User.IsInRole("Исполнитель") && User.Identity.Name == Model.Executor.Name || User.IsInRole("Главный инженер проекта")|| User.IsInRole("Директор")|| User.IsInRole("Руководитель направления")))
+{  
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) 
+}
+    @Html.ActionLink("К списку заданий", "Index", new { id = Model.PartitionId })
+</p>
+@Html.Action("Index", "Dependency", new { taskId = Model.Id})
+@Html.Action("GetComments", "Task", new { taskId = Model.Id, count = -1 })
+
+@Html.Action("Create", "Comment", new { tableId = ViewBag.TableId, itemId = Model.Id })

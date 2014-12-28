@@ -1,0 +1,22 @@
+﻿@model ProjectsManagment.Models.IndexViewModel
+@{
+    ViewBag.Title = "Управление аккаунтом";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Изменить пароль", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Установить пароль", "SetPassword")
+            }
+        </p>
+        
+    </div>
+</div>

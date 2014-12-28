@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Event>
+
+@if(Model == null || Model.Count() ==0 )
+{
+    <p>Событий нет</p>
+}
+else
+{ 
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventType)
+            </th>
+        </tr>
+
+    @foreach (var item in Model.ToList()) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)            
+            </td>
+            <td>
+                @item.User.Surname @item.User.Name (@item.User.Email)
+            </td>
+            <td>
+                @Html.Action("GetDescriptionForEvent","Event",item)
+            </td>
+        </tr>
+    }
+
+    </table>
+}

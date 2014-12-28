@@ -1,0 +1,42 @@
+﻿@model ProjectsManagment.Models.Comment
+
+<div class="comment" id="comment-@Model.Id">
+    <div class="comment-up-left">
+        <label><b>Пользователь:</b> @Model.User.Surname @Model.User.Name (@Model.User.UserName)</label>
+    </div>
+
+    <div class="comment-up-right">
+        <label><b>Дата:</b> @Model.Date</label>
+    </div>
+
+    <div class="comment-text">
+        <hr />
+        <p><b>Текст:</b> @Model.Text</p>
+        <hr />
+
+    </div>
+    <div>
+
+        @if (User.Identity.IsAuthenticated && (User.Identity.Name == Model.User.UserName || User.IsInRole("Директор") || User.IsInRole("Администратор") || User.IsInRole("Главный инженер проекта")))
+        {
+            if (User.Identity.Name == Model.User.UserName)
+            {
+                <div class="btn">
+                    @using (Ajax.BeginForm("EditView", "Comment", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "comment-" + Model.Id.ToString() }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" class="btn-light-blue" value="Редактировать" />
+                    }
+                </div>
+            }
+            <div class="btn">
+                @using (Ajax.BeginForm("Delete", "Comment", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "comments" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-red" style="margin-left:10px" value="Удалить" />
+                }
+            </div>
+        }
+
+    </div>
+</div>

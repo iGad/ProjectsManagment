@@ -1,0 +1,22 @@
+﻿@model ProjectsManagment.Models.Project
+
+@{
+    ViewBag.Title = "Описание проекта \"" + Model.Name + "\"";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <hr />
+    @Html.Action("ShowDetails",Model)
+</div>
+<p>
+    @if (Request.IsAuthenticated && (User.IsInRole("Директор") || User.IsInRole("Главный инженер проекта")))
+    {
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id })
+    }
+    @Html.ActionLink("К списку проектов", "Index")
+</p>
+    @Html.Action("GetComments", "Project", new { projectId = Model.Id, count = -1 })
+
+    @Html.Action("Create", "Comment", new { tableId = ViewBag.TableId, itemId = Model.Id })

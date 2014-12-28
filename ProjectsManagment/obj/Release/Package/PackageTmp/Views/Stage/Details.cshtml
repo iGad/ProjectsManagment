@@ -1,0 +1,23 @@
+﻿@model ProjectsManagment.Models.Stage
+
+@{
+    ViewBag.Title = "Описание стадии "+Model.Name;
+}
+<p class="page-path"><a class="page-path" href="~/Project/Details/@ViewBag.ProjectId">@ViewBag.ProjectName</a>/@Model.Name</p>
+<h2>@ViewBag.Title</h2>
+
+<div>
+	<hr />
+    @Html.Action("ShowDetails", Model)
+</div>
+<p>
+    @if (Request.IsAuthenticated && (User.IsInRole("Директор") || User.IsInRole("Главный инженер проекта")))
+    { 
+        @Html.ActionLink("Перейти к редактированию", "Edit", new { id = Model.Id });
+            <br/>
+    }
+    @Html.ActionLink("Вернуться к списку стадий", "Index", new {id = Model.ProjectId})
+</p>
+@Html.Action("GetComments", "Stage", new { stageId = Model.Id, count = -1 })
+
+@Html.Action("Create", "Comment", new { tableId = ViewBag.TableId, itemId = Model.Id })

@@ -1,0 +1,98 @@
+﻿@model ProjectsManagment.Models.Project
+
+
+<dl class="dl-horizontal" id="task-@Model.Id.ToString()">      
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+        
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.State)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.State.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreationDate)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.CreationDate)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DeadLine)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DeadLine)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model=>model.Manager)
+    </dt>
+        @if(Model.Manager==null)
+        {
+            <dd>
+                Отсутствует
+            </dd>
+        }
+        else
+        {
+            <dd>
+                @Model.Manager.Surname @Model.Manager.Name @Model.Manager.Fathername (@Model.Manager.UserName)
+            </dd>
+        }
+
+    <dt>
+        Действия
+    </dt>
+    <dd id="actions">
+        @if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор")))
+        {
+            if (!Model.IsFinish)
+            {
+                using (Ajax.BeginForm("MakeFinish", "Project", new { id = Model.Id, details = true }, new AjaxOptions { UpdateTargetId = "task-" + Model.Id.ToString() }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-green" style="margin:5px" value="Завершить" />
+                }
+            }
+            if (Model.IsPreFinish || Model.IsFinish)
+            {
+                using (Ajax.BeginForm("ShowInfoForCancel", "Project", new { id = Model.Id, details = true }, new AjaxOptions { UpdateTargetId = "actions" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-red" style="margin:5px" value="Отменить завершение" />
+                }
+            }
+
+        }
+            
+    </dd>
+    <dt>
+        Стадии
+    </dt>
+    <dd>
+        @foreach (var item in Model.Stages)
+        {
+            <a href="~/Task/Details/@item.Id.ToString()">@item.Name</a><br/>            
+        }
+        <a href="~/Stage?id=@Model.Id.ToString()">Управление стадиями</a>
+            
+    </dd>
+</dl>
+

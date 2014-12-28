@@ -1,0 +1,22 @@
+﻿@model ProjectsManagment.Models.Partition
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление раздела @Model.Name</h2>
+
+<h3>Вы уверены, что хотите удалить этот раздел?</h3>
+<p>Все задания этого раздела так же будут удалены</p>
+<div>
+   
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-red" /> 
+            @Html.ActionLink("К списку разделов", "Index", new { id=@Model.StageId })
+        </div>
+    }
+</div>

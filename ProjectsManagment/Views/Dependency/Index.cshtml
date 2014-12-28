@@ -1,0 +1,11 @@
+﻿@model ProjectsManagment.Models.Task
+
+<div id="dependencies">
+    <h2>Зависимости</h2>
+    
+    @Html.Action("ShowOutcome", "Dependency", new { taskId = Model.Id })
+    
+    @Html.Action("ShowIncome", "Dependency", new { taskId = Model.Id })
+    
+    @Html.Action("ShowAdd", "Dependency", new { taskId = Model.Id})
+</div>

@@ -1,0 +1,22 @@
+﻿@model ProjectsManagment.Models.Project
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление проекта @Model.Name</h2>
+
+<h3>Вы уверены, что хотите удалить этот проект?</h3>
+<p>Все стадии, разделы и задания этого проекта будут также удалены</p>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-red" /> 
+            @Html.ActionLink("К списку проектов", "Index")
+        </div>
+    }
+</div>
+

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Comment>
+
+<div id="comments" style="clear:both">
+    <h2>Комментарии</h2>
+    @if (Model != null && Model.Count(c => true) > 0)
+    {
+        <div class="details">
+            @foreach (var comm in Model)
+            {
+                @Html.Action("ShowComment", "Comment", new { comment = comm });
+            }
+        </div>
+    }
+    else
+    {
+        <p>Никто еще не оставил комментарий</p>
+    }
+</div>

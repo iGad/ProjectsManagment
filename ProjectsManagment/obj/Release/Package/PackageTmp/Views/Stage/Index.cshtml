@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Stage>
+
+@{
+    ViewBag.Title = "Список стадий";
+}
+<p class="page-path"><a class="page-path" href="~/Project/Details/@ViewBag.ProjectId">@ViewBag.ProjectName</a>/</p>
+<h2>Стадии проекта <b>@ViewBag.ProjectName</b></h2>
+@if (Request.IsAuthenticated && (User.IsInRole("Директор") || User.IsInRole("Главный инженер проекта")))
+{
+    <p>
+        @Html.ActionLink("Добавить", "Create", new { id = ViewBag.id })
+    </p>
+}
+@if (Model == null || (Model!=null && Model.Count()==0))
+{
+    <p>Стадий еще нет</p>
+}
+else
+{
+<table class="table">
+    <tr>       
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Executor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Partitions)
+        </th>
+        <th>Действия</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr id="task-@item.Id.ToString()">
+        @Html.Action("Show", "Stage", item)
+    </tr>
+}
+
+
+</table>
+}

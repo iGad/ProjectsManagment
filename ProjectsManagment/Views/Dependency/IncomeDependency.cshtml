@@ -1,0 +1,30 @@
+﻿@model ProjectsManagment.Models.Dependency
+<div>
+    <div class="depend" id="depend-@Model.Id">
+        <div style="float:left"></div>
+        <p class="depend-text">
+            @Html.ActionLink(Model.TaskDep.Partition.Stage.Project.Name, "Details", "Project", new { id = Model.TaskDep.Partition.Stage.ProjectId }, new { @class = "depend-link" })/
+            @Html.ActionLink(Model.TaskDep.Partition.Stage.Name, "Details", "Stage", new { id = Model.TaskDep.Partition.StageId }, new { @class = "depend-link" })/
+            @Html.ActionLink(Model.TaskDep.Partition.Name, "Details", "Partition", new { id = Model.TaskDep.PartitionId }, new { @class = "depend-link" })/
+            @Html.ActionLink(Model.TaskDep.Name, "Details", "Task", new { id = Model.TaskDep.Id }, new { @class = "depend-link" })
+        </p>
+    </div>
+
+
+    <div class="depend-btn">
+
+        @if (User.Identity.IsAuthenticated && ( User.IsInRole("Директор") || User.IsInRole("Администратор") ||
+            User.IsInRole("Главный инженер проекта") || User.IsInRole("Руководитель направления")))
+        {
+
+            <div class="btn">
+                @using (Ajax.BeginForm("Delete", "Dependency", new { id = Model.Id }, new AjaxOptions { UpdateTargetId = "depend-in" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-red" style="margin-left:10px" value="Удалить" />
+                }
+            </div>
+        }
+
+    </div>
+</div>

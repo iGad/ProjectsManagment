@@ -1,0 +1,82 @@
+﻿@model ProjectsManagment.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Comment</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.File.FullPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.File.FullPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Partition.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Partition.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stage.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stage.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Table.TableName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Table.TableName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Task.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Task.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Dependency>
+<div id="depend-out">
+    <h3>Зависимости от данного задания</h3>
+    @if (Model != null && Model.Count(c => true) > 0)
+    {
+
+        foreach (var dep in Model)
+        {
+            @Html.Action("ShowOutDependency", "Dependency", new { dependency = dep });
+        }
+
+    }
+    else
+    {
+        <p>Отсутствуют</p>
+    }
+</div>

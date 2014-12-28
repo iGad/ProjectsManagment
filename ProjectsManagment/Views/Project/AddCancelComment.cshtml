@@ -1,0 +1,53 @@
+﻿@model ProjectsManagment.Models.Comment
+
+<legend>Замечание</legend>
+
+<div style="width:160px">
+@if(!ViewBag.Details)
+ {
+    using (Ajax.BeginForm("CancelFinish", "Project", Model, new AjaxOptions { UpdateTargetId = "task-"+Model.ItemId.ToString() }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(model => model.ItemId)
+        @Html.ValidationMessageFor(model => model.Text)
+        <span class="field-validation-error" data-valmsg-for="Text" data-valmsg-replace="true">
+            <span id="Text-error" class="">@ViewBag.Error</span>
+        </span>
+        <div >
+            @Html.TextAreaFor(model => model.Text, new { @class = "comment-add-text" })          
+            
+            <div style=" margin-bottom:10px;">
+                <input type="submit" class="btn-red" value="Отменить завершение" />
+            </div>
+        </div>
+    }
+}
+else
+{ 
+    using (Html.BeginForm("CancelFinish2", "Project", Model))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false)
+        @Html.HiddenFor(model => model.ItemId)
+        @Html.ValidationMessageFor(model => model.Text)
+        <span class="field-validation-error" data-valmsg-for="Text" data-valmsg-replace="true">
+            <span id="Text-error" class="">@ViewBag.Error</span>
+        </span>
+        <div >
+            @Html.TextAreaFor(model => model.Text, new { @class = "comment-add-text" })          
+            
+            <div style=" margin-bottom:10px;">
+                <input type="submit" class="btn-red" value="Отменить завершение" />
+            </div>
+        </div>
+
+
+    }       
+}
+
+    
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

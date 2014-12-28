@@ -1,0 +1,45 @@
+﻿@model ProjectsManagment.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Подробности о пользователе";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<div>
+    <h4>Пользователь</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+</div>
+<h4>Роли этого пользователя</h4>
+@if (ViewBag.RoleNames.Count == 0)
+{
+    <hr />
+    <p>У данного пользователя нет ролей.</p>
+}
+
+<table class="table">
+
+    @foreach (var item in ViewBag.RoleNames)
+    {
+        <tr>
+            <td>
+                @item
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>
+
+
+

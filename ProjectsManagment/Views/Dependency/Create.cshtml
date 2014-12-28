@@ -1,0 +1,96 @@
+﻿@model ProjectsManagment.Models.DependencyView
+
+<script type="text/javascript">
+    $(function () {
+        $("#StageId").change(function () {
+            var selectedItem = $(this).val();
+            if (selectedItem != "-1" && selectedItem != "") {
+                var ddlStates = $("#PartitionId");
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.RouteUrl("GetPartitionsByStageId"))",
+                    data: { "StageId": selectedItem },
+                    success: function (data) {
+                        ddlStates.html('');
+                        $.each(data, function (id, option) {
+                            ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        });
+                        
+                        ddlStates.change();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Не удалось загрузить разделы.');
+
+                    }
+                });
+            }
+            });
+        });
+</script> 
+<script type="text/javascript">
+    $(function () {
+        $("#PartitionId").change(function () {
+            var selectedItem = $(this).val();            
+            if (selectedItem != "-1" && selectedItem!="") {
+                var ddlStates = $("#TaskId");
+                var iId = $("#ItemId");
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.RouteUrl("GetTasksByPartitionId"))",
+                    data: { "PartitionId": selectedItem },
+                    success: function (data) {
+                        ddlStates.html('');
+                        var i = 0;
+                        $.each(data, function (id, option) {
+                            if (iId.val() != option.id) {
+                                ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                                i++;
+                            }
+                            
+                        });
+                        if(i>0)
+                        {
+                            var btn = $("#add-depend-btn");
+                            btn.removeAttr('disabled');
+                        }
+                        else
+                        {
+                            $("#add-depend-btn").attr({
+                                'disabled': 'disabled'
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Не удалось загрузить задания.');
+
+                    }
+                });
+            }
+            });
+        });
+</script> 
+<div class="common-div">
+    @using (Ajax.BeginForm("Create", "Dependency", Model, new AjaxOptions { UpdateTargetId = "depend-in" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model=>model.ItemId)
+        @Html.ValidationMessageFor(model=>model.TaskId)
+    <div class="depend-add">
+        @Html.LabelFor(model => model.StageId)
+        @Html.DropDownList("StageId", "Выберите стадию...")
+        @Html.LabelFor(model => model.PartitionId)
+        @Html.DropDownList("PartitionId", "Выберите раздел...")
+        @Html.LabelFor(model => model.TaskId)
+        @Html.DropDownList("TaskId", "Выберите задание...")
+
+        <hr />
+    </div>
+        <div class="depend-btn">
+                <input id="add-depend-btn" type="submit" class="btn-green" value="Добавить" disabled="disabled"/>
+            </div>
+       
+    }
+</div>

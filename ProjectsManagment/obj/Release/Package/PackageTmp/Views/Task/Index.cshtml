@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Task>
+
+    @{
+        ViewBag.Title = "Список заданий";
+    }
+<p class="page-path"><a class="page-path" href="~/Project/Details/@ViewBag.ProjectId">@ViewBag.ProjectName</a>/<a class="page-path" href="~/Stage/Details/@ViewBag.StageId">@ViewBag.StageName</a>/<a class="page-path" href="~/Partition/Details/@ViewBag.PartitionId">@ViewBag.PartitionName</a>/</p>
+    <h2>Задания раздела "@ViewBag.PartitionName" стадии "@ViewBag.StageName" проекта <b>@ViewBag.ProjectName</b></h2>
+@if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор") || User.IsInRole("Руководитель направления")))
+{ 
+    <p>
+        @Html.ActionLink("Создать задание", "Create", new { id = ViewBag.Id })
+    </p>
+}
+@if(Model !=null || Model.Count() > 0 )
+{ 
+    <table class="table">
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeadLine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Executor)
+            </th>
+            <th>Действия</th>
+            <th>Дополнительно</th>
+        </tr>
+
+        @foreach (var item in Model)
+{
+    if (item.IsFinish)
+    {
+        <tr id="task-@item.Id.ToString()" class="row-common row-finish">
+            @Html.Action("Show", "Task", item)
+        </tr>
+    }
+    else
+    {
+        if (item.DeadLine <= DateTime.Now)
+        {
+            <tr id="task-@item.Id.ToString()" class="row-common row-deadline">
+                @Html.Action("Show", "Task", item)
+            </tr>
+        }
+        else
+        {
+            if ((item.DeadLine - DateTime.Now).Days < 7)
+            {
+                <tr id="task-@item.Id.ToString()" class="row-common row-danger">
+                    @Html.Action("Show", "Task", item)
+                </tr>
+            }
+            else
+            {
+                        <tr id="task-@item.Id.ToString()">
+                        @Html.Action("Show", "Task", item)
+                        </tr>
+                    }
+                }
+            }
+
+
+
+        }
+
+    </table>
+}
+else
+{
+    <p>Заданий нет</p>
+}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

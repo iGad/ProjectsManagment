@@ -1,0 +1,28 @@
+﻿@model ProjectsManagment.Models.Comment
+<legend>Добавить комментарий</legend>
+
+<div>
+    <!--using (Html.BeginForm("Create", "Comments", FormMethod.Post, new { enctype = "multipart/form-data" }))-->
+    @using (Ajax.BeginForm("Create", "Comment",new {tableId = Model.TableId, itemId = Model.ItemId}, new AjaxOptions { UpdateTargetId = "comments" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model=>model.TableId)
+        @Html.HiddenFor(model=>model.ItemId)
+
+        <div class="comment">
+            @Html.LabelFor(model => model.Text)
+            @Html.TextAreaFor(model => model.Text, new {@class="comment-add-text" })
+            @Html.ValidationMessageFor(model => model.Text)
+            <hr/>
+            <div style=" margin-left:50px; margin-bottom:10px;">
+                <input type="submit" class="btn-green" value="Отправить" />
+            </div>
+        </div>
+        
+        
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

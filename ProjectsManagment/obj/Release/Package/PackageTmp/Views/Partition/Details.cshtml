@@ -1,0 +1,23 @@
+﻿@model ProjectsManagment.Models.Partition
+
+@{
+    ViewBag.Title = "Описание раздела " + Model.Name;
+}
+<p class="page-path"><a class="page-path" href="~/Project/Details/@ViewBag.ProjectId">@ViewBag.ProjectName</a>/<a class="page-path" href="~/Stage/Details/@ViewBag.StageId">@ViewBag.StageName</a>/@Model.Name</p>
+<h2>@ViewBag.Title</h2>
+
+<div>
+	<hr />
+    @Html.Action("ShowDetails", Model)
+</div>
+
+<p>
+@if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор") ))
+    {
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) <br/>
+}
+    @Html.ActionLink("К списку разделов", "Index", new { id = Model.StageId })
+</p>
+@Html.Action("GetComments", "Partition", new { partitionId = Model.Id, count = -1 })
+
+@Html.Action("Create", "Comment", new { tableId = ViewBag.TableId, itemId = Model.Id })

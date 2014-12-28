@@ -1,0 +1,22 @@
+﻿@if (Request.IsAuthenticated && (User.IsInRole("Директор") || User.IsInRole("Администратор")))
+{ 
+    {
+        ViewBag.Title = "Страница администратора";
+    }
+
+    <h2>Страница администратора</h2>
+    <div>
+        <ul>
+
+            @if (Request.IsAuthenticated && User.IsInRole("Директор"))
+            {
+                <li>@Html.ActionLink("Управление ролями", "Index", "RolesAdmin")</li>
+                <li>@Html.ActionLink("Управление пользователями", "Index", "UsersAdmin")</li>
+                <li>@Html.ActionLink("Управление состояниями проекта", "Index","ProjectState")</li>
+                <li>@Html.ActionLink("Управление таблицей с типами таблиц", "Index","TableTypes")</li>
+                <li>@Html.ActionLink("Управление таблицей с типами событий", "Index","EventTypes")</li>
+            }
+        </ul>
+        </div>
+}
+

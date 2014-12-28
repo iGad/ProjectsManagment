@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ProjectsManagment.Models.ProjectsFile>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullPath)
+        </th>        
+        <th>Действия</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullPath)
+        </td>        
+        <td>            
+            @Html.ActionLink("Просмотр", "Details", "ProjectFile", new { id=item.Id }, null) 
+            @Html.ActionLink("Удалить", "Delete", "ProjectFile", new { id = item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>

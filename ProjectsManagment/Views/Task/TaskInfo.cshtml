@@ -1,0 +1,88 @@
+﻿@model ProjectsManagment.Models.Task
+
+   
+    <td>
+        @Html.DisplayFor(modelItem => Model.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.State.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.CreationDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.DeadLine)
+    </td>
+    @if (Model.Executor == null)
+    {
+        <td>
+            Отсутствует
+        </td>
+    }
+    else
+    {
+        <td>
+            @Model.Executor.Surname @Model.Executor.Name (@Model.Executor.Email)
+        </td>
+    }
+    <td id="actions-@Model.Id.ToString()">
+        @if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор") || User.IsInRole("Руководитель направления")))
+        {
+            if(!Model.IsFinish)
+            { 
+                using (Ajax.BeginForm("MakeFinish", "Task", new { id = Model.Id, details = false }, new AjaxOptions { UpdateTargetId = "task-" + Model.Id.ToString() }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-green" style="margin:5px" value="Завершить" />
+                }
+            }
+            if(Model.IsPreFinish || Model.IsFinish)
+            { 
+                using (Ajax.BeginForm("ShowInfoForCancel", "Task", new { id = Model.Id, details = false }, new AjaxOptions { UpdateTargetId = "actions-" + Model.Id.ToString() }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn-red" style="margin:5px" value="Отменить завершение" />
+                }
+            }
+           
+        }
+        else
+        {
+            if (Model.Executor != null && !Model.IsFinish && Request.IsAuthenticated && User.IsInRole("Исполнитель") && User.Identity.Name == Model.Executor.UserName)
+            {
+                if (!Model.IsPreFinish)
+                {
+                    using (Ajax.BeginForm("MakeFinish", "Task", new { id = Model.Id, details = false }, new AjaxOptions { UpdateTargetId = "task-" + Model.Id.ToString() }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" class="btn-green" style="margin-left:5px" value="Завершить" />
+                    }
+                }
+                else
+                {
+                    using (Ajax.BeginForm("ShowInfoForCancel", "Task", new { id = Model.Id, details = false }, new AjaxOptions { UpdateTargetId = "actions-" + Model.Id.ToString() }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" class="btn-red" style="margin-left:5px" value="Отменить завершение" />
+                    }
+                   
+                }
+            }
+        }
+</td>
+
+    <td>
+    @if (Request.IsAuthenticated && (User.IsInRole("Главный инженер проекта") || User.IsInRole("Директор") ))
+    {
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id })
+        <br/>
+        @Html.ActionLink("Удалить", "Delete", new { id = Model.Id })
+        <br/>
+    }
+        @Html.ActionLink("Подробнее", "Details", new { id = Model.Id }) 
+        
+    </td>
+

@@ -1,0 +1,38 @@
+﻿@model ProjectsManagment.Models.Task
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление задания @Model.Name</h2>
+@if(!Model.IsFinish || ViewBag.DependTasks != null)
+{
+    <h3>Удаление невозможно. Причины:</h3>
+    <ul>
+        @if(!Model.IsFinish)
+        {
+            <li><p>Задание не завершено</p></li>
+        }
+        @if(ViewBag.DependTasks != null)
+        {
+            foreach(var t in ViewBag.DependTasks)
+            {
+                <li><p>Задание @Html.ActionLink(t.Name, "Details", "Task", new { id = t.Id }) зависит от этого задания</p></li>
+            }
+        }
+    </ul>
+    
+}
+else
+{
+    <h3>Вы уверены, что хотите удалить это задание?</h3>
+    <p>Вся комментарии, файлы и прочее будут также удалены!</p>
+     using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-red" /> 
+            @Html.ActionLink("К списку заданий", "Index", new { id = @Model.PartitionId }, new { @class="btn btn-default" })
+        </div>
+    }
+}

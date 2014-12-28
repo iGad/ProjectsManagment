@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ProjectsManagment.Models.Project>
+
+<ul class="treeview">
+@foreach (var project in Model)
+{
+
+    <li id="item-0-@project.Id.ToString()">
+        @using (Ajax.BeginForm("Explore", new { level = 0, id = project.Id }, new AjaxOptions { UpdateTargetId = "item-0-" + project.Id.ToString() }))
+        {
+            <input type="submit" class="explore-btn" style="margin:5px" value="[+]" />
+        }
+        <a href="~/Project/Details/@project.Id">@project.Name</a>
+    </li>
+}
+</ul>
